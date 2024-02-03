@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Registration Form</title>
+  <script>
+    // Load the JSON file containing existing users
+    var existingUsers;
+
+    // Fetch the JSON file (assuming it's in the same directory)
+    fetch('users.json')
+      .then(response => response.json())
+      .then(data => existingUsers = data)
+      .catch(error => console.error('Error fetching existing users:', error));
+
+    function validateForm() {
+      var usernameInput = document.getElementById('usernameInput').value.toLowerCase();
+      var emailInput = document.getElementById('emailInput').value.toLowerCase();
+
+      // Check if the entered username or email already exists
+      for (var user in existingUsers) {
+        if (existingUsers.hasOwnProperty(user)) {
+          if (user === usernameInput) {
+            alert('Username already exists. Please choose a different username.');
+            return false;
+          }
+
+          if (existingUsers[user].email.toLowerCase() === emailInput) {
+            alert('Email already exists. Please use a different email.');
+            return false;
+          }
+        }
+      }
+
+      alert('Registration successful!');
+      return true;
+    }
+  </script>
+</head>
+<body>
+
+  <form onsubmit="return validateForm()">
+    <label for="usernameInput">Username:</label>
+    <input type="text" id="usernameInput" name="usernameInput">
+    <br>
+    <label for="emailInput">Email:</label>
+    <input type="email" id="emailInput" name="emailInput">
+    <br>
+    <button type="submit">Register</button>
+  </form>
+
+</body>
+</html>
