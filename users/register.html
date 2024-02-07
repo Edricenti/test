@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Registration Form</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <form autocomplete='off' class='form' 
+    name="submit-to-google-sheet">
+    <div class='control'>
+      <h1>
+        Sign In
+      </h1>
+    </div>
+    <div class='control block-cube block-input'>
+        <div class='bg-top'>
+          <div class='bg-inner'></div>
+        </div>
+        <div class='bg-right'>
+          <div class='bg-inner'></div>
+        </div>
+        <div class='bg'>
+          <div class='bg-inner'></div>
+        </div>
+        <input name='Email' placeholder='Email' type="Email" id="emailInput"required>
+      </div>
+    <div class='control block-cube block-input'>
+      <input name='username' placeholder='Username' type="username" id="usernameInput"required>
+      <div class='bg-top'>
+        <div class='bg-inner'></div>
+      </div>
+      <div class='bg-right'>
+        <div class='bg-inner'></div>
+      </div>
+      <div class='bg'>
+        <div class='bg-inner'></div>
+      </div>
+    </div>
+    <div class='control block-cube block-input'>
+      <input name='password' placeholder='Password' type='password'id="passwordInput"required>
+      <div class='bg-top'>
+        <div class='bg-inner'></div>
+      </div>
+      <div class='bg-right'>
+        <div class='bg-inner'></div>
+      </div>
+      <div class='bg'>
+        <div class='bg-inner'></div>
+      </div>
+    </div>
+    <button class='btn block-cube block-cube-hover' type='submit'>
+      <div class='bg-top'>
+        <div class='bg-inner'></div>
+      </div>
+      <div class='bg-right'>
+        <div class='bg-inner'></div>
+      </div>
+      <div class='bg'>
+        <div class='bg-inner'></div>
+      </div>
+      <div class='text'>
+        Register
+      </div>
+    </button>
+    <span id="success"></span>
+    <span id="error"></span>
+    <a href="../level-1.html" style="color: aqua; text-decoration: none; text-align: center;">Go to level 1</a>
+  </form>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzZNQF3ms9WUbqXpD7DXYY74RS-E44igEZRqIHCIYr1JHh6SLUzHsEDh1L5AmTwLz5K/exec'
+    const form = document.forms['submit-to-google-sheet']
+    const success = document.getElementById('success')
+    const error = document.getElementById('error')
+    form.addEventListener('submit', e => {
+      e.preventDefault()
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      success.innerHTML('Successful to register!')
+      error.innerHTML('Oops! Some error occured!')
+    })
+  </script>
+  </body>
+</html>
+<!--form by Marko-Zub-->
